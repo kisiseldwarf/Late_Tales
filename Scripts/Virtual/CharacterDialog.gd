@@ -36,6 +36,7 @@ func _ready():
 	_init_background()
 	_init_sprite()
 	_init_foreground()
+	_init_theme()
 	_init_text()
 	_init_button_container()
 
@@ -66,9 +67,9 @@ func _init_text():
 	textLabel.set_position(Vector2(textLabel.get_position().x, textLabel.get_position().y + dialog_textbox_offset))
 	textLabel.align = HALIGN_LEFT
 	$".".add_child(textLabel) 
-	_init_theme()
 	_init_title_theme()
 	_init_title()
+	textLabel.theme = theme
 
 func _init_theme():
 	# -- Fonts
@@ -85,7 +86,6 @@ func _init_theme():
 	theme.set_color("font_color_pressed","Button",Color(0.7,0.7,0.7,1))
 	theme.set_constant("separation","VBoxContainer",20)
 	
-	textLabel.theme = theme
 
 func _init_title_theme():
 	var font = DynamicFont.new()

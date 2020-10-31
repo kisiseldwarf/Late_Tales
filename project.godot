@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="EnquêteGame"
-run/main_scene="res://Scenes/CharacterDialogScene.tscn"
+run/main_scene="res://Scenes/world_test.tscn"
 
 [autoload]
 

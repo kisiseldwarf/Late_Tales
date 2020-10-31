@@ -60,7 +60,7 @@ func create_uidown(text,theme):
 	return label
 
 func _init_ui():
-	var InitTheme = load("Scripts/InitTheme.gd")
+	var InitTheme = load("Scripts/Tools/InitTheme.gd")
 	var theme = Theme.new()
 	var font = DynamicFont.new()
 	var theme_initializator = InitTheme.new()

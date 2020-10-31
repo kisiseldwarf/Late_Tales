@@ -1,4 +1,4 @@
-extends "Character.gd"
+extends "Virtual/Character.gd"
 
 var tileset = load("res://tileset_test.tres")
 var texture = AtlasTexture.new()
@@ -19,7 +19,7 @@ func _ready():
 	set_uidown_text("Press X to talk to Georgia")
 	$"../HUD".add_child(ui_down)
 	
-	var InitTheme = load("Scripts/InitTheme.gd")
+	var InitTheme = load("Scripts/Tools/InitTheme.gd")
 	var theme = Theme.new()
 	var font = DynamicFont.new()
 	var theme_initializator = InitTheme.new()

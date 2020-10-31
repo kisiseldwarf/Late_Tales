@@ -1,4 +1,4 @@
-extends "CharacterDialogScene.gd"
+extends "Virtual/CharacterDialog.gd"
 
 var title = "Kais le con-man"
 var time = 0.02
