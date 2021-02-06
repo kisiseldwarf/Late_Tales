@@ -1,9 +1,5 @@
 extends Node2D
 
-var sprite = AnimatedSprite.new()
-var tileset = load("tileset_test.tres")
-var texture : AtlasTexture = AtlasTexture.new()
-var kinematicbody = KinematicBody2D.new()
 var velocity = 60
 
 # Called when the node enters the scene tree for the first time.
