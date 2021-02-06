@@ -2,11 +2,13 @@
 Repository of the Late Hotel Stories game
 
 # Conventions
-**PascalCase** : Classes ou script qui ne doit pas être instancié directement en jeu, mais utilisé via un script
+**PascalCase**: Classes ou script qui ne doit pas être instancié directement en jeu, mais utilisé via un script
 
-**lowercase** : Scripts instanciés dans un objet Godot et utilisé directement dans le jeu
+**lowercase**: Scripts instanciés dans un objet Godot et utilisé directement dans le jeu
 
-**HIGHERCASE** : Constantes
+**kebabCase**: Variables
+
+**HIGHERCASE**: Constantes
 
 # FAQ
 ## Interface Utilisateur
