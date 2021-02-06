@@ -1,7 +1,7 @@
 extends Node2D
 
 #preload is better
-var menu = preload("../Scenes/menu_princ.tscn")
+var menu = preload("../Scenes/Tools/menu_princ.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +16,6 @@ func _input(event):
 		if get_node("./HUD/menu_princ") == null:
 			var menu_node = menu.instance()
 			$"./HUD".add_child(menu_node)
-			print_tree()
 		#if it is
 		else:
 			$"./HUD".remove_child($"./HUD/menu_princ")

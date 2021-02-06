@@ -1,44 +1,31 @@
-extends Node2D
+extends Control
 
 # --- Signals --- #
-signal line_end
-signal next_line
+signal lines_end
 
 # --- Sprite --- #
-var sprite = Sprite.new()
+onready var sprite = $"character"
 
 # --- Text --- #
-var textLabel = Label.new()
-var textbox_x_size = 500
-var textbox_y_size = 150
-var theme = Theme.new()
-var theme_title = Theme.new()
-var font = DynamicFont.new()
-var dialog_textbox_offset = 175
-var title_textLabel = Label.new()
-var titletext_x_size = 500
-var titletext_y_size = 50
+onready var textLabel = $"dialogbox"
+onready var title_textLabel = $"title"
+onready var tween = $"dialogbox/Tween"
+var frequency = 1
 var writing_dialog = 0
 var end_dialog = 0
 
 # --- Background --- #
-var background_rect = TextureRect.new()
-
-# --- Foreground --- #
-var fg_offset = 125
-var blackRect = ColorRect.new()
+onready var background_rect = $"background"
 
 # --- Buttons --- #
-var button_container = VBoxContainer.new()
+onready var button_container = $"VBoxContainer"
+
+# --- lines ---#
+var line : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_init_background()
 	_init_sprite()
-	_init_foreground()
-	_init_theme()
-	_init_text()
-	_init_button_container()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,118 +33,66 @@ func _process(delta):
 
 # --- Concerning Text --- #
 
-func say(text, time):
-	textLabel.text = ""
-	var timer = Timer.new()
-	writing_dialog = 1
-	for chars in text:
-		if end_dialog == 1:
-			break
-		textLabel.text += chars
-		yield(get_tree().create_timer(time),"timeout")
-	writing_dialog = 0
-	emit_signal("line_end")
-	textLabel.text = text
+func start_lines():
+	writing_dialog = true
+	next_line()
 
-func _init_text():
-	textLabel.set_size(Vector2(textbox_x_size,textbox_y_size))
-	textLabel.set_autowrap(true)
-	textLabel.set_clip_text(false)
-	textLabel.set_position(get_viewport_rect().size / 2 - Vector2(textLabel.get_size().x/2,0))
-	textLabel.set_position(Vector2(textLabel.get_position().x, textLabel.get_position().y + dialog_textbox_offset))
-	textLabel.align = HALIGN_LEFT
-	$".".add_child(textLabel) 
-	_init_title_theme()
-	_init_title()
-	textLabel.theme = theme
+func add_line(text,fr=frequency):
+	line.push_back([text,fr])
 
-func _init_theme():
-	# -- Fonts
-	font.font_data = load("res://Assets/Brighton Spring Personal Use Only.ttf")
-	font.size = 35
-	theme.set_default_font(font)
-	# -- Buttons
-	theme.set_stylebox("hover","Button",StyleBoxEmpty.new())
-	theme.set_stylebox("normal","Button",StyleBoxEmpty.new())
-	theme.set_stylebox("pressed","Button",StyleBoxEmpty.new())
-	theme.set_stylebox("focus","Button",StyleBoxEmpty.new())
-	theme.set_color("font_color","Button",Color(0.7,0.7,0.7,1))
-	theme.set_color("font_color_hover","Button",Color(1,1,1,1))
-	theme.set_color("font_color_pressed","Button",Color(0.7,0.7,0.7,1))
-	theme.set_constant("separation","VBoxContainer",20)
-	
-
-func _init_title_theme():
-	var font = DynamicFont.new()
-	font.font_data = load("res://Assets/Brighton Spring Personal Use Only.ttf")
-	font.size = 50
-	font.outline_size = 5
-	font.outline_color = Color(0,0,0,1)
-	theme_title.set_default_font(font)
-	title_textLabel.theme = theme_title
-
-func _init_title():
-	var offset = 70
-	title_textLabel.set_size(Vector2(titletext_x_size,titletext_y_size))
-	title_textLabel.set_autowrap(true)
-	title_textLabel.set_clip_text(false)
-	title_textLabel.align = HALIGN_CENTER
-	title_textLabel.set_position(get_viewport_rect().size / 2 - Vector2(textLabel.get_size().x/2,- offset))
-	$".".add_child(title_textLabel)
+func next_line():
+	if !line.empty():
+		var data = line.pop_front()
+		tween.interpolate_property(textLabel,"percent_visible",0,1,data[1])
+		textLabel.percent_visible = 0
+		textLabel.text = data[0]
+		tween.start()
+	else:
+		writing_dialog = false
+		emit_signal("lines_end")
 
 func set_title(title):
 	title_textLabel.text = title
 
 # --- Concerning Sprite --- #
 func _init_sprite():
-	sprite.scale = Vector2(0.5,0.5)
 	sprite.position = get_viewport_rect().size / 2
-	sprite.name = "sprite"
-	$".".add_child(sprite)
 
 func set_sprite(texture):
-	$"sprite".texture = texture
-
-# --- Concerning Background --- #
-func _init_background():
-	background_rect.set_size(Vector2(get_viewport_rect().size.x,get_viewport_rect().size.y/2))
-	background_rect.set_position(Vector2(0,0))
-	background_rect.set_stretch_mode(TextureRect.STRETCH_KEEP_CENTERED)
-	background_rect.name = "background_rect"
-	$".".add_child(background_rect,true)
+	sprite.texture = texture
 
 func set_background(texture):
-	$"background_rect".set_texture(texture)
+	background_rect.set_texture(texture)
 
-# --- Concerning Foreground --- #
-func _init_foreground():
-	blackRect.color = Color(0,0,0,1)
-	blackRect.set_size(Vector2(get_viewport_rect().size.x,get_viewport_rect().size.y/2))
-	blackRect.set_position(Vector2(0,get_viewport_rect().size.y/2 + fg_offset))
-	$".".add_child(blackRect)
+func is_dialog_finished():
+	return line.empty()
 
 # --- Concerning Input management --- #
 func _input(inputEvent):
 	if Input.is_action_just_pressed("ui_click"):
-		if writing_dialog == 1:
-			end_dialog = 1
-		elif writing_dialog == 0:
-			end_dialog = 0
-			emit_signal("next_line")
-
-# --- Concerning Buttons --- #
-func _init_button_container():
-	var button_container_offsety = 200
-	button_container.theme = theme
-	button_container.alignment = HALIGN_CENTER
-	button_container.set_size(Vector2(300,300))
-	button_container.set_position(get_viewport_rect().size/2 - Vector2(button_container.get_size().x/2,-button_container_offsety))
-	$".".add_child(button_container)
+		if writing_dialog:
+			if tween.is_active():
+				tween.remove(textLabel,"percent_visible")
+				textLabel.percent_visible = 1
+			else:
+				next_line()
+	if Input.is_action_just_pressed("ui_cancel") && !writing_dialog:
+		quit()
 
 func add_button(text, method):
 	var button = Button.new()
 	button.text = text
-	button.theme = theme
-	button.flat = true
 	button.connect("pressed",self,method)
 	button_container.add_child(button)
+
+func quit():
+	get_tree().change_scene_to(Global.dialog_return_scene)
+
+## NO CHECK ON THIS FUNCTION BE CAREFUL
+func load_dialog(filepath):
+	var file = File.new()
+	file.open(filepath,File.READ)
+	while(!file.eof_reached()):
+		var line = file.get_line()
+		add_line(line) 
+	file.close()

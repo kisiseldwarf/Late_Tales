@@ -12,44 +12,31 @@ func _ready():
 	set_sprite(sprite)
 	set_background(bg)
 	set_title(title)
-	say("Salut Mae, tranquille ?",0)
+	start_lines()
 	# can be useful someday bc ui_accept will trigger the button if focus is activated
 	# button.enabled_focus_mode = Control.FOCUS_NONE
-	add_button("Moi ca va","debug")
-	add_button("Je bois un cafe","debug")
-	add_button("Quelle vie","rin_ra")
+	add_button("Avez-vous des informations particulieres sur la Rin-Ra ?","rin_ra")
+	add_button("Bonjour","no")
 	add_button("* Quitter *","quit")
+
+func no():
+	$".".remove_child(button_container)
+	load_dialog("res://Assets/Dialogs/albin_monologue.tres")
+	start_lines()
+	yield(self,"dialog_end")
+	$".".add_child(button_container)
 
 func rin_ra():
 	$".".remove_child(button_container)
-	say("Ah...",time)
-	yield(self, "next_line")
-	say("...",0.5)
-	yield(self,"next_line")
-	say("La Rin-Ra... Quels bande d'enfoirés",time)
-	yield(self, "next_line")
-	say("Je n'ai pas grand chose à dire à leurs sujet...",time)
-	yield(self, "next_line")
-	say("Après tout, il paraît que même leurs techniques secrètes sont...",time)
-	yield(self,"next_line")
-	say("...",time)
-	yield(self,"next_line")
-	say("secrètes.",time)
-	yield(self,"line_end")
-	$".".add_child(button_container)
-
-func debug():
-	# removing the container temporarily is one way to solve the ui_accept triggering
-	# the buttons infinitely
-	$".".remove_child(button_container)
-	say("Bonjour, j'aime pas Kais car il est gros",time)
-	yield(self, "next_line")
-	say("Mais bon, il faut croire que tu es assez debile",time)
-	yield(self, "next_line")
-	say("Alors approche...",time)
-	yield(self, "next_line")
-	say("Alors quoi ? On a peur j'imagine ?!",time)
-	yield(self,"line_end")
+	add_line("Ah...")
+	add_line("...",0.5)
+	add_line("La Rin-Ra... Quels bande d'enfoirés")
+	add_line("Je n'ai pas grand chose à dire à leurs sujet...")
+	add_line("Après tout, il paraît que même leurs techniques secrètes sont...")
+	add_line("...")
+	add_line("secrètes.")
+	start_lines()
+	yield(self,"dialog_end")
 	$".".add_child(button_container)
 
 func quit():
