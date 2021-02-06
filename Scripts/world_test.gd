@@ -1,7 +1,7 @@
 extends Node2D
 
 #preload is better
-var menu = preload("../Scenes/Tools/menu_princ.tscn")
+var menu = preload("res://Scenes/Prefabs/menu_princ.tscn")
 export var music : AudioStream
 
 # Called when the node enters the scene tree for the first time.

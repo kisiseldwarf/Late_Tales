@@ -3,7 +3,7 @@ extends "Virtual/ITalkableCharacter.gd"
 var tileset = load("res://tileset_test.tres")
 var texture = AtlasTexture.new()
 var talking : Label
-var dialogscene = preload("res://Scenes/Dialogs/characterdialog_test.tscn")
+var dialogscene = preload("res://Scenes/Dev/Dialogs/characterdialog_test.tscn")
 
 
 func _ready():
