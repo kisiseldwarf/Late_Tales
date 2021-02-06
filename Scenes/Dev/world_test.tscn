@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Characters/Emet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Music/godot.wav" type="AudioStream" id=2]
 [ext_resource path="res://tileset_test.tres" type="TileSet" id=3]
 [ext_resource path="res://Scenes/Virtual/TalkableCharacter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/world_test.gd" type="Script" id=5]
@@ -52,6 +53,7 @@ func _input(inputEvent):
 
 [node name="test" type="Node2D"]
 script = ExtResource( 5 )
+music = ExtResource( 2 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )

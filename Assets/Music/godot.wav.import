@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/godot.wav-303ad420c6fc5797345485329e1ac15a.sample"
+path="res://.import/godot.wav-9a9b8780ca145daabcfbdd115a0b8be4.sample"
 
 [deps]
 
-source_file="res://Assets/Tileset/godot.wav"
-dest_files=[ "res://.import/godot.wav-303ad420c6fc5797345485329e1ac15a.sample" ]
+source_file="res://Assets/Music/godot.wav"
+dest_files=[ "res://.import/godot.wav-9a9b8780ca145daabcfbdd115a0b8be4.sample" ]
 
 [params]
 

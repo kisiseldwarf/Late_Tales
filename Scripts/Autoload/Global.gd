@@ -2,17 +2,18 @@ extends Node2D
 
 var dialog_return_scene : PackedScene
 var player_position = null
-var hotel_song = AudioStreamPlayer2D.new()
+var audioPlayer: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
 var scenepath = "user://return.tscn"
 var gamename = "Late Hotel Stories"
 var savepath = "user://save.lhs"
 const encryptionkey : String = "k0a210eBbp"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	hotel_song.stream = load("Assets/godot.wav")
-	hotel_song.attenuation = 0
-	$".".add_child(hotel_song)
+func setAudioStream(audioStream: AudioStream):
+	audioPlayer.stream = audioStream
+
+func playAudio(node: Node):
+	node.add_child(audioPlayer)
+	audioPlayer.play()
 
 func state():
 	var state = {
