@@ -6,6 +6,7 @@ var audioPlayer: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
 var scenepath = "user://return.tscn"
 var gamename = "Late Hotel Stories"
 var savepath = "user://save.lhs"
+var playerName : String = "Emet"
 const encryptionkey : String = "k0a210eBbp"
 
 func setAudioStream(audioStream: AudioStream):
@@ -15,7 +16,7 @@ func playAudio(node: Node):
 	node.add_child(audioPlayer)
 	audioPlayer.play()
 
-func state():
+func state() -> String:
 	var state = {
 		"player_position":player_position,
 		"dialog_return_scene":scenepath,
@@ -28,6 +29,9 @@ func save():
 	var jsonsave = state()
 	file.store_string(jsonsave)
 	file.close()
+
+func getPlayer() -> Node:
+	return get_tree().get_nodes_in_group("player")[0]
 
 func _load():
 	var file = File.new()

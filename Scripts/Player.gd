@@ -4,9 +4,9 @@ var velocity = 60
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$"kinematicbody/AnimatedSprite".play('idle')
+	$"kinematicBody/AnimatedSprite".play('idle')
 	if(Global.player_position != null):
-		$"kinematicbody".position = Global.player_position
+		$"kinematicBody".position = Global.player_position
 
 # --- Movement --- #
 # ( might try to make it work in _input )
@@ -22,4 +22,4 @@ func _process(delta):
 		direction += Vector2(0,-1)
 	
 	var movement = direction.normalized() * velocity
-	$"kinematicbody".move_and_slide(movement)
+	$"kinematicBody".move_and_slide(movement)
