@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ghost.png-bebf09cbe530a313a236cb397b540c49.stex"
+path="res://.import/ghost.png-c434035aec1fceeb953ff0a9b0117cad.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset/ghost.png"
-dest_files=[ "res://.import/ghost.png-bebf09cbe530a313a236cb397b540c49.stex" ]
+source_file="res://Assets/Images/ghost.png"
+dest_files=[ "res://.import/ghost.png-c434035aec1fceeb953ff0a9b0117cad.stex" ]
 
 [params]
 

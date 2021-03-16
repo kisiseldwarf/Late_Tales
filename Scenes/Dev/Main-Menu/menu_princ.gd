@@ -12,7 +12,7 @@ func quit_pressed():
 	get_tree().quit()
 
 func save_pressed():
-	Global.player_position = get_tree().current_scene.get_node("Player").get_node("kinematicbody").position
+	Global.player_position = Global.getPlayer().get_node("kinematicBody").position
 	var act_scene = PackedScene.new()
 	act_scene.pack(get_tree().current_scene)
 	ResourceSaver.save("user://return.tscn",act_scene)

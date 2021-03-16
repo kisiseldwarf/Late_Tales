@@ -29,10 +29,9 @@ Global="*res://Scripts/Autoload/Global.gd"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=1368
+window/size/height=768
 window/size/resizable=false
-window/size/fullscreen=true
 
 [gdnative]
 

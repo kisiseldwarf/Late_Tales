@@ -10,7 +10,7 @@ func _ready():
 
 # --- Movement --- #
 # ( might try to make it work in _input )
-func _process(delta):
+func _process(_delta):
 	var direction = Vector2(0,0)
 	if Input.is_action_pressed("ui_left"):
 		direction =+ Vector2(-1,0)

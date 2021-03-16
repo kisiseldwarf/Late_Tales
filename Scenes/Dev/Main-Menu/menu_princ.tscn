@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Assets/Themes/menu.theme" type="Theme" id=1]
-[ext_resource path="res://Scripts/menu_princ.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Dev/Main-Menu/menu_princ.gd" type="Script" id=2]
 
 [node name="menu_princ" type="CenterContainer"]
 anchor_right = 1.0
@@ -17,10 +17,10 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 930.0
-margin_top = 484.0
-margin_right = 989.0
-margin_bottom = 596.0
+margin_left = 650.0
+margin_top = 328.0
+margin_right = 709.0
+margin_bottom = 440.0
 custom_constants/separation = 40
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
