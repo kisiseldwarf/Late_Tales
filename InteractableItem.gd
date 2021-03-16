@@ -1,6 +1,7 @@
 extends Node2D
 
 export var desc: PoolStringArray
+export var logicalElementsName: PoolStringArray
 export var textSpeed: float
 
 onready var tween = Global.getUiDesc().get_node("Label/Tween")
@@ -50,6 +51,8 @@ func startExamine():
 	nextLine()
 
 func stopExamine():
+	for logicalElementName in logicalElementsName:
+		Player.logicalElements.push_back(Player.Logical.new(logicalElementName))
 	Global.activatePlayer()
 	Global.getUiDesc().hide()
 	Global.getUiLaunchButDesc().show()

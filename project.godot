@@ -26,6 +26,7 @@ run/main_scene="res://Scenes/Dev/world_test.tscn"
 [autoload]
 
 Global="*res://Scripts/Autoload/Global.gd"
+Player="*res://Scripts/Autoload/Player.gd"
 
 [display]
 
