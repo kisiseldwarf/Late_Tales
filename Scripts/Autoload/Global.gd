@@ -22,7 +22,10 @@ func quit():
 func initDatabase():
 	db.path = dbPath
 	db.foreign_keys = true
-	db.import_from_json("res://data.json")
+	if(!File.new().file_exists(dbPath+".db")):
+		db.import_from_json("res://data.json")
+	else:
+		db.open_db()
 
 func _ready():
 	initDatabase()
