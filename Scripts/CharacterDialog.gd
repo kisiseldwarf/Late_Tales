@@ -25,6 +25,9 @@ var dialogLines: Dictionary
 var bufChar: Array
 var actualLine;
 
+# --- Theme ---#
+var usedTheme: Theme = preload("res://Assets/Themes/menuUsed.theme")
+
 func _ready():
 	if(audio.stream == null):
 		#put an empty sound in it
@@ -93,11 +96,12 @@ func _input(_inputEvent):
 		queue_free()
 
 func dialogButtonHandler(lines: PoolStringArray, button: Button):
-	startTalking()
-	
 	if(!Global.dialogStates.has("dialBut-"+String(hash(lines)))):
 		Global.dialogStates["dialBut-"+String(hash(lines))] = true
-		button.text += "GREYED"
+		greyingButton(button)
+	
+	startTalking()
+	
 	for line in lines:
 		add_line(line)
 	next_line()
@@ -109,9 +113,12 @@ func add_button(text, lines: PoolStringArray):
 	var button = Button.new()
 	button.text = text
 	if(Global.dialogStates.has("dialBut-"+String(hash(lines)))):
-		button.text += "GREYED"
+		greyingButton(button)
 	button.connect("pressed",self,"dialogButtonHandler",[lines, button])
 	button_container.add_child(button)
+
+func greyingButton(button: Button):
+	button.theme = usedTheme
 
 func startTalking():
 	$".".remove_child(button_container)
