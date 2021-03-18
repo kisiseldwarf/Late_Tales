@@ -27,7 +27,7 @@ func launch_dialog():
 	var root = get_tree().get_root()
 	var node = dialogTemplate.instance()
 	Global.saveWorld()
-	Global.getUiMainMenu().hide()
+	print_tree_pretty()
 	Global.getCustomRoot().remove_child(Global.getWorld())
 	root.add_child(node)
 	node.get_node("Camera2D").make_current()

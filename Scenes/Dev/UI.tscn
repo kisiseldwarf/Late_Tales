@@ -5,7 +5,9 @@
 [ext_resource path="res://Scenes/Dev/Main-Menu/menu_princ.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Themes/menu.theme" type="Theme" id=4]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" groups=[
+"ui",
+]]
 
 [node name="talking" type="CenterContainer" parent="." groups=[
 "ui_talking",

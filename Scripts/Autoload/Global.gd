@@ -1,5 +1,7 @@
 extends Node2D
 
+const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
+
 var dialog_return_scene : PackedScene
 var player_position = null
 var audioPlayer: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
@@ -10,6 +12,20 @@ const encryptionkey : String = "k0a210eBbp"
 var dialogStates: Dictionary = {}
 var world: Node2D
 var uiMode: bool = false
+var dbPath: String = "res://data"
+var db = SQLite.new()
+
+func quit():
+	db.close_db()
+	get_tree().quit()
+
+func initDatabase():
+	db.path = dbPath
+	db.foreign_keys = true
+	db.import_from_json("res://data.json")
+
+func _ready():
+	initDatabase()
 
 func activateUiMode():
 	uiMode = true
@@ -27,26 +43,31 @@ func playAudio(node: Node):
 	node.add_child(audioPlayer)
 	audioPlayer.play()
 
-func state() -> String:
+func playerState() -> String:
 	var state = {
-		"player_position":player_position,
-		"dialog_return_scene":scenepath,
-		"dialogStates": dialogStates
+		"scene":scenepath,
+		"dialogSates": dialogStates
 	}
 	return JSON.print(state)
 
 func save():
 	var file = File.new()
 	file.open_encrypted_with_pass(savepath,File.WRITE,encryptionkey)
-	var jsonsave = state()
+	var jsonsave = playerState()
 	file.store_string(jsonsave)
 	file.close()
+
+func deactivateGameUi():
+	get_tree().get_nodes_in_group("ui")[0].set_process(false)
+
+func activateGameUi():
+	get_tree().get_nodes_in_group("ui")[0].set_process(true)
 
 func saveWorld():
 	world = getWorld()
 
 func getCustomRoot() -> Node:
-	return get_tree().get_root().get_child(1)
+	return get_tree().get_nodes_in_group("root")[0]
 
 func getMainCamera() -> Camera2D:
 	return get_tree().get_nodes_in_group("main_camera")[0] as Camera2D
@@ -54,26 +75,26 @@ func getMainCamera() -> Camera2D:
 func getPlayer() -> Node:
 	return get_tree().get_nodes_in_group("player")[0]
 
+## UI TALKING ##
+
+func getUiTalking() -> Node:
+	return get_tree().get_nodes_in_group("ui_talking")[0]
+
+## UI DESC ##
+
 func getUiDesc() -> Node:
 	return get_tree().get_nodes_in_group("ui_desc")[0]
 
 func getUiLaunchButDesc() -> Node:
 	return get_tree().get_nodes_in_group("ui_desc_launch")[0]
 
-func getUiTalking() -> Node:
-	return get_tree().get_nodes_in_group("ui_talking")[0]
+## UI MAIN MENU ##
 
 func getUiMainMenu() -> Node:
 	return get_tree().get_nodes_in_group("ui_main_menu")[0]
 
 func getWorld() -> Node:
 	return get_tree().get_nodes_in_group("world")[0]
-
-func activatePlayer():
-	getPlayer().set_process(true)
-
-func deactivatePlayer():
-	getPlayer().set_process(false)
 
 func _load():
 	var file = File.new()

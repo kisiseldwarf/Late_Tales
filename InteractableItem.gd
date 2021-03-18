@@ -1,7 +1,7 @@
 extends Node2D
 
 export var desc: PoolStringArray
-export var logicalElementsName: PoolStringArray
+export var logicalElementsId: PoolIntArray
 export var textSpeed: float
 
 onready var tween = Global.getUiDesc().get_node("Label/Tween")
@@ -13,10 +13,10 @@ func _ready():
 	$"Area2D".connect("body_exited",self,"onAreaExited")
 
 func onAreaEntered(_node: Node):
-	Global.getUiLaunchButDesc().show()
+	Ui.showUiLaunchButDesc()
 
 func onAreaExited(_node: Node):
-	Global.getUiLaunchButDesc().hide()
+	Ui.hideUiLaunchButDesc()
 
 func nextLine():
 	var label = Global.getUiDesc().get_node("Label")
@@ -44,15 +44,19 @@ func playerLaunchExamine():
 	return Input.is_action_just_pressed("ui_accept") && $"Area2D".overlaps_body(Global.getPlayer().get_node("kinematicBody"))
 
 func startExamine():
-	Global.deactivatePlayer()
-	Global.getUiDesc().show()
-	Global.getUiLaunchButDesc().hide()
+	Ui.showUiDesc()
+	Ui.hideUiLaunchButDesc()
 	descBuf = Array(desc)
 	nextLine()
 
 func stopExamine():
-	for logicalElementName in logicalElementsName:
-		Player.logicalElements.push_back(Player.Logical.new(logicalElementName))
-	Global.activatePlayer()
-	Global.getUiDesc().hide()
-	Global.getUiLaunchButDesc().show()
+	for logicalElementId in logicalElementsId:
+		Global.db.query("SELECT * FROM logicals WHERE id="+str(logicalElementId))
+		var logicalElement = Global.db.query_result[0]
+		var res = Global.db.query("SELECT * FROM logical_links WHERE idFirst="+str(logicalElement["id"])+" OR idSecond="+str(logicalElement["id"]))
+		print(res)
+		print(Global.db.query_result)
+		var logicalElementLinks = Global.db.query_result
+		Player.logicalElements.push_back(Player.toLogical(logicalElement, logicalElementLinks))
+	Ui.hideUiDesc()
+	Ui.showUiLaunchButDesc()

@@ -25,6 +25,7 @@ run/main_scene="res://Scenes/Dev/world_test.tscn"
 
 [autoload]
 
+Ui="*res://Scripts/Autoload/UI.gd"
 Global="*res://Scripts/Autoload/Global.gd"
 Player="*res://Scripts/Autoload/Player.gd"
 
@@ -33,6 +34,10 @@ Player="*res://Scripts/Autoload/Player.gd"
 window/size/width=1368
 window/size/height=768
 window/size/resizable=false
+
+[editor_plugins]
+
+enabled=PoolStringArray( "godot-sqlite" )
 
 [gdnative]
 

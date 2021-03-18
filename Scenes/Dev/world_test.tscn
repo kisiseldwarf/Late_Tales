@@ -21,16 +21,15 @@ func _input(event):
 		switchMainMenu()
 
 func switchMainMenu():
-	var menu = Global.getUiMainMenu()
-	if menu.is_visible() == false:
-		Global.deactivatePlayer()
-		menu.show()
+	if Global.getUiMainMenu().is_visible() == false:
+		Ui.showUiMainMenu()
 	else:
-		Global.activatePlayer()
-		menu.hide()
+		Ui.hideUiMainMenu()
 "
 
-[node name="root" type="Node2D"]
+[node name="root" type="Node2D" groups=[
+"root",
+]]
 position = Vector2( 0, 0.202316 )
 script = ExtResource( 5 )
 music = ExtResource( 2 )
@@ -55,7 +54,7 @@ tile_data = PoolIntArray( 2, 16, 0, 3, 16, 0, 4, 16, 0, 5, 16, 0, 6, 16, 0, 7, 1
 [node name="Emet" parent="Outerworld" groups=[
 "player",
 ] instance=ExtResource( 1 )]
-position = Vector2( 132.203, 98.7898 )
+position = Vector2( 132.203, 98.1598 )
 
 [node name="TalkableCharacter" parent="Outerworld" instance=ExtResource( 4 )]
 position = Vector2( 89.5427, 159.277 )
@@ -69,6 +68,7 @@ dialogManager = ExtResource( 12 )
 [node name="InteractableItemTest" parent="Outerworld" instance=ExtResource( 13 )]
 position = Vector2( 200.819, 74.2692 )
 desc = PoolStringArray( "bite", "coucou" )
+logicalElementsId = PoolIntArray( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="." groups=[
 "main_camera",
@@ -78,6 +78,4 @@ rotating = true
 current = true
 zoom = Vector2( 0.25, 0.25 )
 
-[node name="HUD" parent="." groups=[
-"ui",
-] instance=ExtResource( 6 )]
+[node name="HUD" parent="." instance=ExtResource( 6 )]

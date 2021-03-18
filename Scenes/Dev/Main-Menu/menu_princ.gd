@@ -11,7 +11,7 @@ func _ready():
 	logical_but.connect("button_up",self,"logical_pressed")
 
 func quit_pressed():
-	get_tree().quit()
+	Global.quit()
 
 func save_pressed():
 	Global.player_position = Global.getPlayer().get_node("kinematicBody").position
@@ -21,5 +21,8 @@ func save_pressed():
 	Global.save()
 
 func logical_pressed():
+	var res = Global.db.query("SELECT * FROM logicals")
+	print(Global.db.query_result)
 	for logicalElement in Player.logicalElements:
 		print(logicalElement.name)
+		print(logicalElement.linksIds)
